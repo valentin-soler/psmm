@@ -19,3 +19,6 @@ def connection_serveur(key,ip):
         }
     )
     return c
+
+def exec_command(srv,command):
+    return srv.run(command, hide=True).stdout
