@@ -8,7 +8,7 @@ def choix_serveur():
     resp=["1","2","3"]
     ip=["192.168.157.136","192.168.157.138","192.168.157.140"] #Liste d'ip à adapter a votre situation
     while choix not in resp :
-        choix=str(input("Quel est le serveur de destination (1-> FTP, 2-> Web, 3-> SQL)"))
+        choix=str(input("Quel est le serveur de destination (1-> FTP, 2-> Web, 3-> SQL)\n"))
     return ip[int(choix)-1]
 
 #Initialisation de la connection SSH
@@ -33,7 +33,7 @@ def main():
         srv_connect=connection_serveur(SSH_key,ip_connect)
         command_srv=str(input("Quel commande souhaitez-vous exectuer ?\n"))
         print(exec_command(srv_connect,command_srv))
-        again=int(input("Souhaitez-vous relancer une connection ? 1--> Oui 2 --> Non"))
+        again=int(input("Souhaitez-vous relancer une connection ? 1--> Oui 2 --> Non\n"))
         if again==2:
             ok=False
     print("Au revoir")
