@@ -1,15 +1,17 @@
-#pip install fabric ou le paquet python-fabric (dans les dépots AUR sur Arch) / python3-fabric (Debian)
+#pip install fabric ou le paquet fabric sous Arch (dépot extra) / python3-fabric (Debian)
 from fabric import Connection
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
+#Choix du serveur cible:
 def choix_serveur():
     choix=0
     resp=["1","2","3"]
-    ip=["192.168.157.136","192.168.157.138","192.168.157.140"]
+    ip=["192.168.157.136","192.168.157.138","192.168.157.140"] #Liste d'ip à adapter a votre situation
     while choix not in resp :
         choix=str(input("Quel est le serveur de destination (1-> FTP, 2-> Web, 3-> SQL)"))
     return ip[int(choix)-1]
 
+#Initialisation de la connection SSH
 def connection_serveur(key,ip):
     c = Connection(
         host=ip,
@@ -19,11 +21,12 @@ def connection_serveur(key,ip):
         }
     )
     return c
-
+#Execution de commande SSH
 def exec_command(srv,command):
     return srv.run(command, hide=True).stdout
 
-def menu():
+#Main
+def main():
     ok=True
     while ok==True:
         ip_connect=choix_serveur()
@@ -35,4 +38,5 @@ def menu():
             ok=False
     print("Au revoir")
 
-menu()
+if __name__ == "__main__":
+    main()
