@@ -22,6 +22,16 @@ def connection_serveur_sql(ip,username,passwd,tb):
         table=tb
     )
     return c
+
+def connection_close_sql(connection):
+    connection.close()
+    return 1
+
+def add_to_DB(user,ip,date,time,connection):
+    cursor = connection.cursor()
+    cursor.execute(f"INSERT INTO error (user, date, time, ip) VALUES ({user}, {date}, {time}, {ip})")
+    cursor.close()
+
 def exec_command(srv,command):
     return srv.run(command, hide=True).stdout
 
