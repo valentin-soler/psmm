@@ -9,3 +9,4 @@ mysql-connector-python (Pour debian 13, utilisé le paquet dans "paquet manquant
 ssh_login.py -> Connection en SSH et execution d'une commande
 ssh_login_sudo.py -> Connection en SSH et execution d'une commande en sudo (sudo configurer sans demande de mot de passe)
 ssh_mysql.py --> Connection au serveur SQL et liste les tables dans une base de donnée définie dans les script avec les id donnée dans le script
+ssh_mysql_error.py --> Connection au serveur SQL et récupération des logs pour les mettres dans une BDD
