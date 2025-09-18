@@ -3,7 +3,7 @@ Les scripts ont été tester sous Debian 13 & Manjaro.
 
 ### Dépendense Python:
 Fabric (apt install python3-fabric | pacman -S fabric) --> Client SSH
-mysql-connector-python (apt install python3-mysql-connector | pacman -S python-mysql-connector) --> Client SQL
+mysql-connector-python (Pour debian 13, utilisé le paquet dans "paquet manquant" et installer python3-protobuf | pacman -S python-mysql-connector) --> Client SQL
 
 ### Script :
 ssh_login.py -> Connection en SSH et execution d'une commande
