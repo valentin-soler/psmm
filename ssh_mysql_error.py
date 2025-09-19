@@ -20,7 +20,7 @@ def connection_serveur_sql():
         host="192.168.157.140",
         user="",
         password="",
-        database="error_acess"
+        database="error_access"
     )
     return c
 
@@ -32,7 +32,7 @@ def connection_close_sql(connection):
 def add_to_DB(user,ip,date,time,connection):
     cursor = connection.cursor()
     cursor.execute(
-    "INSERT INTO error (user, date, time, ip) VALUES (%s, %s, %s, %s)",
+    "INSERT INTO error_sql (user, date, time, ip) VALUES (%s, %s, %s, %s)",
     (user, date, time, ip))
     cursor.close()
 
