@@ -31,6 +31,8 @@ def create_mail(log_ftp,log_web,log_sql):
             mail=mail+f"Il y a eux {len(log_ftp)} tentatives d'intrustion sur le serveur FTP\n"
             for log in log_ftp:
                 mail=mail+f"{log} \n"
+        if log_web:
+            mail=mail+f"Il y a eux {len(log_web)} tentatives d'intrusion sur le serveur WEB\n"
     else:
         return "Il n'y a eu aucune tentative d'intrusion hier sur les machines FTP,WEB et SQL"
 
