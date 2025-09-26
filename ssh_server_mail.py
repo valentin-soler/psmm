@@ -37,10 +37,21 @@ def create_mail(log_ftp,log_web,log_sql):
                 mail=mail+f"{log} \n"
         if log_sql:
             mail=mail+f"Il y a eux {len(log_sql)} tentatives d'instrusion sur le serveur SQL\n"
+            for log in log_sql:
+                mail=mail+f"{log} \n"
     else:
         return "Il n'y a eu aucune tentative d'intrusion hier sur les machines FTP,WEB et SQL"
 
-
+def get_date_by_log(type_log):
+    mois=[0,"Jan","Fev","Mar","Avr","May",'Jun',"Jul","Aug","Sep","Oct","Nov","Dec"]
+    if type_log == "sql":
+        return yesterday_date
+    elif type_log == "web" :
+        mois_date=int(yesterday_date[5:7])
+        return str(f"{mois[mois_date]} {yesterday_date[8:]} {yesterday_date[:4]}")
+    elif type_log == "ftp":
+        mois_date=int(yesterday_date[5:7])
+        return str(f"{mois[mois_date]} ")
 
 
 

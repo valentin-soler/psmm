@@ -12,3 +12,4 @@ ssh_mysql.py --> Connection au serveur SQL et liste les tables dans une base de 
 ssh_mysql_error.py --> Connection au serveur SQL et récupération des logs pour les mettres dans une BDD
 ssh_ftp_error.py --> Connection au serveur FTP via SSH pour récupération des log, et stockages des tentative de connection infructueuse dans la bdd
 ssh_web_error.py --> Connection au serveur WEB via SSH pour récupération des log, et stocakges des tentative de connection infructueuse dans la bdd
+ssh_server_mail.py --> Envoie de mail a l'administrateur avec les donnée de la BDD

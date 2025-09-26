@@ -19,8 +19,8 @@ def connection_serveur_ssh(key,ip):
 def connection_serveur_sql():
     c = mysql.connector.connect(
         host="192.168.157.140",
-        user="",
-        password="",
+        user="bilou",
+        password="valentin",
         database="error_access"
     )
     return c
