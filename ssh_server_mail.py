@@ -3,21 +3,18 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import mysql.connector
 
-def get_yesterday_date(date):
-    return str(date[0:8]+str(int(date[8:10])-1))
 today_date=str(datetime.now())
-yesterday_date=get_yesterday_date(today_date)
 
-def send_mail(mail):
+def send_mail(mail,date):
     port=587 #TLS
     smtp_server = "smtp.gmail.com" #SMTP Gmail, Mot de passe d'application obligatoire
     login = "" #Adresse mail Gmail
     password = "" #Votre mot de passe d'application
     
     sender_email= "" #Mail
-    receiver_email= "" #Mail de l'administrateur
+    receiver_email= "admin@hessfr.fr" #Mail de l'administrateur
     message=MIMEText(mail,"plain")
-    message["Subject"] = f"Tentative d'intrusion du {yesterday_date}"
+    message["Subject"] = f"Tentative d'intrusion du {date}"
     message["From"] = sender_email
     message["To"] = receiver_email
 
@@ -33,23 +30,24 @@ def create_mail(log_ftp,log_web,log_sql):
         if log_ftp:
             mail=mail+f"Il y a eux {len(log_ftp)} tentatives d'intrusion sur le serveur FTP\n"
             for log in log_ftp:
-                mail=mail+f"{log} \n"
+                mail=mail+f"Heure : {log[2]} User : {log[3]} IP : {log[4]} \n"
         if log_web:
             mail=mail+f"Il y a eux {len(log_web)} tentatives d'intrusion sur le serveur WEB\n"
             for log in log_web:
-                mail=mail+f"{log} \n"
+                mail=mail+f"Heure : {log[3]} User : {log[1]} IP : {log[4]} \n"
         if log_sql:
             mail=mail+f"Il y a eux {len(log_sql)} tentatives d'instrusion sur le serveur SQL\n"
             for log in log_sql:
-                mail=mail+f"{log} \n"
+                mail=mail+f"Heure : {log[3]} User : {log[1]} IP : {log[4]} \n"
+        return mail
     else:
         return "Il n'y a eu aucune tentative d'intrusion hier sur les machines FTP,WEB et SQL"
 
 def connection_serveur_sql():
     c = mysql.connector.connect(
         host="192.168.157.140",
-        user="",
-        password="",
+        user="bilou",
+        password="valentin",
         database="error_access"
     )
     return c
@@ -58,6 +56,9 @@ def connection_close_sql(connection):
     connection.commit()
     connection.close()
     return 1
+
+def get_yesterday_date(date):
+    return str(date[0:8]+str(int(date[8:10])-1))
 
 def get_log(type_srv,date,connection):
     cursor = connection.cursor()
@@ -72,23 +73,15 @@ def get_log(type_srv,date,connection):
     return result
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def main():
-    print("TODO")
+    srv_sql=connection_serveur_sql()
+    date=get_yesterday_date(today_date)
+    logs_ftp=get_log("ftp",date,srv_sql)
+    logs_web=get_log("web",date,srv_sql)
+    logs_sql=get_log("sql",date,srv_sql)
+    connection_close_sql(srv_sql)
+    mail=create_mail(logs_ftp,logs_web,logs_sql)
+    send_mail(mail,date)
 
 
 
