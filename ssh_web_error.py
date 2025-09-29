@@ -2,6 +2,7 @@
 from fabric import Connection
 import mysql.connector
 import re
+from datetime import datetime
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
 ip='192.168.157.138' #IP du serveur Web
@@ -33,12 +34,17 @@ def connection_close_sql(connection):
 def add_to_DB(user,ip,date,time,connection):
     cursor = connection.cursor()
     cursor.execute(
-    "INSERT INTO error_web (user, date, time, ip) VALUES (%s, %s, %s, %s)",
+    "INSERT IGNORE INTO error_web (user, date, time, ip) VALUES (%s, %s, %s, %s)",
     (user, date, time, ip))
     cursor.close()
 
 def exec_command(srv,command):
     return srv.run(command, hide=True).stdout
+
+def convert_date(date):
+    dt = datetime.strptime(date, "%a %b %d %H:%M:%S.%f %Y")
+    return dt.strftime("%Y-%m-%d")
+
 
 def extract_log(logs):
     result=[]
@@ -52,7 +58,7 @@ def extract_log(logs):
             # découpage
             parts = datetime_str.split()
             print(parts[1:3])
-            date = " ".join(parts[1:3] + [parts[4]])   # "Sep 22 2025"
+            date = convert_date(datetime_str)
             time = parts[3] 
             result.append({
                 "date": date,
