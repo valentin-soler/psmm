@@ -3,6 +3,8 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import mysql.connector
 
+def get_yesterday_date(date):
+    return str(date[0:8]+str(int(date[8:10])-1))
 today_date=str(datetime.now())
 yesterday_date=get_yesterday_date(today_date)
 
@@ -42,9 +44,6 @@ def create_mail(log_ftp,log_web,log_sql):
                 mail=mail+f"{log} \n"
     else:
         return "Il n'y a eu aucune tentative d'intrusion hier sur les machines FTP,WEB et SQL"
-
-def get_yesterday_date(date):
-    return str(date[0:8]+str(int(date[8:10])-1))
 
 def connection_serveur_sql():
     c = mysql.connector.connect(
