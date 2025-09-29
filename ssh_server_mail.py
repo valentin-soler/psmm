@@ -1,9 +1,10 @@
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
+import mysql.connector
 
 today_date=str(datetime.now())
-yesterday_date=str(today_date[0:8]+str(int(today_date[8:10])-1))
+yesterday_date=get_yesterday_date(today_date)
 
 def send_mail(mail):
     port=587 #TLS
@@ -42,18 +43,34 @@ def create_mail(log_ftp,log_web,log_sql):
     else:
         return "Il n'y a eu aucune tentative d'intrusion hier sur les machines FTP,WEB et SQL"
 
-def get_date_by_log(type_log):
-    mois=[0,"Jan","Fev","Mar","Avr","May",'Jun',"Jul","Aug","Sep","Oct","Nov","Dec"]
-    if type_log == "sql":
-        return yesterday_date
-    elif type_log == "web" :
-        mois_date=int(yesterday_date[5:7])
-        return str(f"{mois[mois_date]} {yesterday_date[8:]} {yesterday_date[:4]}")
-    elif type_log == "ftp":
-        mois_date=int(yesterday_date[5:7])
-        return str(f"{mois[mois_date]} ")
+def get_yesterday_date(date):
+    return str(date[0:8]+str(int(date[8:10])-1))
 
+def connection_serveur_sql():
+    c = mysql.connector.connect(
+        host="192.168.157.140",
+        user="",
+        password="",
+        database="error_access"
+    )
+    return c
 
+def connection_close_sql(connection):
+    connection.commit()
+    connection.close()
+    return 1
+
+def get_log(type_srv,date,connection):
+    cursor = connection.cursor()
+    if type_srv == "ftp":
+        cursor.execute("SELECT * FROM error_ftp WHERE date = %s", (date,))
+    elif type_srv == "sql":
+        cursor.execute("SELECT * FROM error_sql WHERE date = %s", (date,))
+    elif type_srv == "web":
+        cursor.execute("SELECT * FROM error_web WHERE date = %s", (date,))
+    result=cursor.fetchall()
+    cursor.close()
+    return result
 
 
 
