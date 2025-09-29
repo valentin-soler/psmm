@@ -2,6 +2,7 @@
 from fabric import Connection
 import mysql.connector
 import re
+from datetime import datetime
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
 ip='192.168.157.136' #IP du serveur SQL
@@ -33,12 +34,16 @@ def connection_close_sql(connection):
 def add_to_DB(user,ip,date,time,connection):
     cursor = connection.cursor()
     cursor.execute(
-    "INSERT INTO error_ftp (user, date, time, ip) VALUES (%s, %s, %s, %s)",
+    "INSERT IGNORE INTO error_ftp (user, date, time, ip) VALUES (%s, %s, %s, %s)",
     (user, date, time, ip))
     cursor.close()
 
 def exec_command(srv,command):
     return srv.run(command, hide=True).stdout
+
+def convert_time(date):
+    dt=datetime.strptime(date, "%a %b %d %Y")
+    return dt.strftime("%Y-%m-%d")
 
 def extract_log(logs):
     result=[]
@@ -47,8 +52,9 @@ def extract_log(logs):
     for log in logs_lines:
         m = pattern.search(log)
         if m:
+            date=convert_time(f"{m.group("date")} {m.group("annee")}")
             result.append({
-                "date": m.group("date"),
+                "date": date,
                 "heure": m.group("heure"),
                 "user": m.group("user"),
                 "ip": m.group("ip")
