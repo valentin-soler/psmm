@@ -19,8 +19,8 @@ def connection_serveur_ssh(key,ip):
 def connection_serveur_sql():
     c = mysql.connector.connect(
         host="192.168.157.140",
-        user="bilou",
-        password="valentin",
+        user="",
+        password="",
         database="error_access"
     )
     return c
@@ -33,7 +33,7 @@ def connection_close_sql(connection):
 def add_to_DB(user,ip,date,time,connection):
     cursor = connection.cursor()
     cursor.execute(
-    "INSERT INTO error_sql (user, date, time, ip) VALUES (%s, %s, %s, %s)",
+    "INSERT IGNORE INTO error_sql (user, date, time, ip) VALUES (%s, %s, %s, %s)",
     (user, date, time, ip))
     cursor.close()
 
