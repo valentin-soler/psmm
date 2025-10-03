@@ -16,7 +16,7 @@ def connection_serveur_ssh(key,ip):
     return c
 
 def main():
-    remote=connection_serveur_ssh(SSH_key,ip):
+    remote=connection_serveur_ssh(SSH_key,ip)
     dump_name = f"dump_{datetime.now().strftime('%d-%m-%Y_%H-%M')}.sql"
     remote_path = f"/tmp/{dump_name}"
     local_dir = os.path.expanduser("~/backup")
