@@ -45,3 +45,6 @@ def collect_stats(c):
 def main():
     server_ssh=connection_serveur_ssh(ip,SSH_key)
     print(collect_stats(server_ssh))
+
+if __name__ == "__main__":
+    main()
