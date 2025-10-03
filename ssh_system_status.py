@@ -1,0 +1,47 @@
+from fabric import Connection
+import mysql.connector
+from datetime import datetime
+
+SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
+ip='192.168.157.140' #IP du serveur SQL
+
+def connection_serveur_ssh(key,ip):
+    c = Connection(
+        host=ip,
+        user="monitor",
+        connect_kwargs={
+            "key_filename": key
+        }
+    )
+    return c
+
+def connection_serveur_sql():
+    c = mysql.connector.connect(
+        host="192.168.157.140",
+        user="",
+        password="",
+        database="error_access"
+    )
+    return c
+
+def connection_close_sql(connection):
+    connection.commit()
+    connection.close()
+    return 1
+
+def collect_stats(c):
+    ram_line=c.run("free -m | awk 'NR==2{print $3,$2}'")
+    used_ram, total_ram = map(int, ram_line.split())
+
+    cpu_line = c.run('top -bn1 | grep "Cpu(s)"', hide=True).stdout
+    cpu_usage = float(cpu_line.split()[1].replace(',', '.'))
+
+    disk_line = c.run("df --total -h | grep 'total'", hide=True).stdout.split()
+    disk_used = disk_line[2]
+    disk_total = disk_line[1]
+
+    return used_ram, total_ram, cpu_usage, disk_used, disk_total
+
+def main():
+    server_ssh=connection_serveur_ssh(ip,SSH_key)
+    print(collect_stats(server_ssh))
