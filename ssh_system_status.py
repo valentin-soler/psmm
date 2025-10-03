@@ -44,7 +44,12 @@ def collect_stats(c):
     disk_total = disk_line[1]
 
     return used_ram, total_ram, cpu_usage, disk_used, disk_total
-
+def add_to_DB(machine,date,heure,cpu,ram,disk,c):
+    cursor = c.cursor()
+    cursor.execute("INSERT IGNORE INTO etat_sys (machine, date, heure, cpu, ram, disk) VALUES (%s, %s, %s, %s, %s, %s)",
+    (machine,date,heure,cpu,ram,disk))
+    cursor.close()
+    
 def main():
     server_ssh=connection_serveur_ssh(SSH_key,ip)
     print(collect_stats(server_ssh))
