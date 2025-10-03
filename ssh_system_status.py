@@ -30,8 +30,8 @@ def connection_close_sql(connection):
     return 1
 
 def collect_stats(c):
-    ram_line=c.run("free -m | awk 'NR==2{print $3,$2}'")
-    print(ram_line)
+    ram_result = c.run("free -m | awk 'NR==2{print $3,$2}'", hide=True)
+    ram_line = ram_result.stdout.strip()
     used_ram, total_ram = map(int, ram_line.split())
     print(used_ram)
 
