@@ -45,7 +45,7 @@ def collect_stats(c):
     return used_ram, total_ram, cpu_usage, disk_used, disk_total
 
 def main():
-    server_ssh=connection_serveur_ssh(ip,SSH_key)
+    server_ssh=connection_serveur_ssh(SSH_key,ip)
     print(collect_stats(server_ssh))
 
 if __name__ == "__main__":
