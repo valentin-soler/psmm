@@ -32,9 +32,11 @@ def connection_close_sql(connection):
 def collect_stats(c):
     ram_line=c.run("free -m | awk 'NR==2{print $3,$2}'")
     used_ram, total_ram = map(int, ram_line.split())
+    print(used_ram)
 
     cpu_line = c.run('top -bn1 | grep "Cpu(s)"', hide=True).stdout
     cpu_usage = float(cpu_line.split()[1].replace(',', '.'))
+    print(cpu_usage)
 
     disk_line = c.run("df --total -h | grep 'total'", hide=True).stdout.split()
     disk_used = disk_line[2]
