@@ -58,7 +58,7 @@ def script_machine(ip,type_vm):
     result_ram=f"{result[0]}M of {result[1]}M"
     result_cpu_usage=result[2]
     result_disk=f"{result[3]} of {result[4]}"
-    add_to_DB(type_vm,datetime.now().date(),datetime.now().time(),result_cpu_usage,result_ram,result_disk)
+    add_to_DB(type_vm,datetime.now().date(),datetime.now().time(),result_cpu_usage,result_ram,result_disk,server_sql)
     connection_close_sql(server_sql)
     
 def main():
