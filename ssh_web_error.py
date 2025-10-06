@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
-ip='192.168.157.138' #IP du serveur Web
+ip='192.168.157.129' #IP du serveur Web
 
 def connection_serveur_ssh(key,ip):
     c = Connection(
@@ -19,7 +19,7 @@ def connection_serveur_ssh(key,ip):
 
 def connection_serveur_sql():
     c = mysql.connector.connect(
-        host="192.168.157.140",
+        host="192.168.157.128",
         user="",
         password="",
         database="error_access"

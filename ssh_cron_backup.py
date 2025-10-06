@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
-ip='192.168.157.140' #IP du serveur SQL
+ip='192.168.157.128' #IP du serveur SQL
 
 def connection_serveur_ssh(key,ip):
     c = Connection(

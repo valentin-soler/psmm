@@ -3,7 +3,7 @@ import mysql.connector
 
 #Création de la connection
 conn = mysql.connector.connect(
-    host="192.168.157.140",
+    host="192.168.157.128",
     user="bilou",
     password="", #A changé avec votre mdp
     database="test"

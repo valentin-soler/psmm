@@ -6,7 +6,7 @@ SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chem
 def choix_serveur():
     choix=0
     resp=["1","2","3"]
-    ip=["192.168.157.136","192.168.157.138","192.168.157.140"] #Liste d'ip à adapter a votre situation
+    ip=["192.168.157.130","192.168.157.129","192.168.157.128"]  #Liste d'ip à adapter a votre situation
     while choix not in resp :
         choix=str(input("Quel est le serveur de destination (1-> FTP, 2-> Web, 3-> SQL)\n"))
     return ip[int(choix)-1]

@@ -4,7 +4,7 @@ import mysql.connector
 import re
 
 SSH_key='PSMM' #Nom de la clé privé pour se connecté, cela peut être un chemin aussi.
-ip='192.168.157.140' #IP du serveur SQL
+ip='192.168.157.128' #IP du serveur SQL
 
 def connection_serveur_ssh(key,ip):
     c = Connection(
@@ -18,7 +18,7 @@ def connection_serveur_ssh(key,ip):
 
 def connection_serveur_sql():
     c = mysql.connector.connect(
-        host="192.168.157.140",
+        host="192.168.157.128",
         user="",
         password="",
         database="error_access"

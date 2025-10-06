@@ -45,7 +45,7 @@ def create_mail(log_ftp,log_web,log_sql):
 
 def connection_serveur_sql():
     c = mysql.connector.connect(
-        host="192.168.157.140",
+        host="192.168.157.128",
         user="bilou",
         password="valentin",
         database="error_access"
